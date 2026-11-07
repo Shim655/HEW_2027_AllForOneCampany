@@ -105,7 +105,7 @@ void UpdateJengaManager(void)
 
 	if (Keyboard_IsKeyTrigger(KK_SPACE))
 	{
-		g_groundShakePower = 1000.0f;
+		//g_groundShakePower = 1000.0f;
 	}
 
 	g_groundShakeTime += 1.0f;
@@ -252,4 +252,9 @@ void SetJengaBusiness(b2BodyId bodyID, BUSINESS_TYPE type)
 
 		break;
 	}
+}
+
+void ShakeJenga(void)
+{
+	g_groundShakePower = 1000.0f;
 }

@@ -12,7 +12,7 @@
 #include "sprite.h"
 #include "texture.h"
 #include "text.h"
-#include "player.h"
+#include "jenga_player.h"
 using namespace DirectX;
 
 void UI_Score::Initialize(void)

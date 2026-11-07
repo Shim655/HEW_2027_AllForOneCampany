@@ -14,7 +14,7 @@
 #include "mouse.h"
 #include "color.h"
 #include "text.h"
-#include "player.h"
+#include "jenga_player.h"
 using namespace DirectX;
 
 static constexpr int NUM_EMPLOYEE_NEEDED = 1;

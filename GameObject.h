@@ -27,6 +27,7 @@ public:
 	}
 
 	bool IsOnMouse(void);
+	void Move(void);
 
 	void SetPosition(DirectX::XMFLOAT2 position)
 	{
@@ -35,6 +36,10 @@ public:
 	void SetSize(DirectX::XMFLOAT2 size)
 	{
 		m_size = size;
+	}
+	void SetVelocity(DirectX::XMFLOAT2 velocity)
+	{
+		m_velocity = velocity;
 	}
 	void SetColor(DirectX::XMFLOAT4 color)
 	{
@@ -78,6 +83,7 @@ public:
 private:
 	DirectX::XMFLOAT2 m_position{ 0.0f,0.0f };
 	DirectX::XMFLOAT2 m_size{ 0.0f,0.0f };
+	DirectX::XMFLOAT2 m_velocity{ 0.0f,0.0f };
 	DirectX::XMFLOAT4 m_color{ 1.0f,1.0f,1.0f,1.0f };
 	float m_rotation{ 0.0f };
 	int m_textureID{ -1 };

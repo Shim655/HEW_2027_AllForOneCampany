@@ -1,6 +1,6 @@
 /*
 * +-------------------------------------+
-* File   : プレイヤー制御[player.cpp]
+* File   : プレイヤー制御[jenga_player.cpp]
 * Author : 沈揆賢
 * Date   : 2026/11/02
 *
@@ -14,9 +14,10 @@
 #include "mouse.h"
 #include "keyboard.h"
 #include "camera.h"
+#include "color.h"
 #include "JengaManager.h"
 #include "text.h"
-#include "player.h"
+#include "jenga_player.h"
 using namespace DirectX;
 
 static constexpr float ROTATION_SPEED = 0.03f;
@@ -32,7 +33,7 @@ static int g_numEmployee{ 0 };
 
 static b2BodyId g_debugID;
 
-void InitializePlayer(void)
+void InitializeJengaPlayer(void)
 {
 	g_playerPosition = { 0.0f,0.0f };
 	g_money = 1000;
@@ -44,7 +45,7 @@ void InitializePlayer(void)
 	g_business = BUSINESS_TYPE::NONE;
 }
 
-void FinalizePlayer(void)
+void FinalizeJengaPlayer(void)
 {
 	if (g_pBuilding)
 	{
@@ -53,7 +54,7 @@ void FinalizePlayer(void)
 	}
 }
 
-void UpdatePlayer(void)
+void UpdateJengaPlayer(void)
 {
 	//マウスの座標をカメラに合わせて補正
 	const XMINT2 mousePosition = GetMousePosition();
@@ -120,7 +121,7 @@ void UpdatePlayer(void)
 	}
 }
 
-void DrawPlayer(void)
+void DrawJengaPlayer(void)
 {
 	if (g_pBuilding != nullptr)
 	{

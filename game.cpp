@@ -9,9 +9,10 @@
 * +-------------------------------------+
 */
 #include "main.h"
-#include "player.h"
+#include "jenga_player.h"
 #include "JengaManager.h"
 #include "UIManager.h"
+#include "EmergencyManager.h"
 using namespace DirectX;
 
 
@@ -19,27 +20,31 @@ using namespace DirectX;
 void InitializeGame(void)
 {
 	InitializeJengaManager();
-	InitializePlayer();
+	InitializeJengaPlayer();
 	InitializeUIManager();
+	InitializeEmergencyManager();
 }
 
 void FinalizeGame(void)
 {
 	FinalizeJengaManager();
-	FinalizePlayer();
+	FinalizeJengaPlayer();
 	FinalizeUIManager();
+	FinalizeEmergencyManager();
 }
 
 void UpdateGame(void)
 {
 	UpdateJengaManager();
-	UpdatePlayer();
+	UpdateJengaPlayer();
 	UpdateUIManager();
+	UpdateEmergencyManager();
 }
 
 void DrawGame(void)
 {
 	DrawJengaManager();
+	DrawEmergencyManager();
 	DrawUIManager();
-	DrawPlayer();
+	DrawJengaPlayer();
 }

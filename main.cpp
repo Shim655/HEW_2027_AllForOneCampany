@@ -220,6 +220,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 
 void Initialize(HINSTANCE hInstance, HWND hWnd)
 {
+	srand(timeGetTime());
 	g_windowSize = { (float)SCREEN_WIDTH,(float)SCREEN_HEIGHT };
 
 	//DirectXèâä˙âª

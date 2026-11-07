@@ -1,6 +1,6 @@
 /*
 * +-------------------------------------+
-* File   : プレイヤー制御[player.h]
+* File   : プレイヤー制御[jenga_player.h]
 * Author : 沈揆賢
 * Date   : 2026/11/02
 *
@@ -13,10 +13,10 @@
 #include "Building.h"
 #include "Business.h"
 
-void InitializePlayer(void);
-void FinalizePlayer(void);
-void UpdatePlayer(void);
-void DrawPlayer(void);
+void InitializeJengaPlayer(void);
+void FinalizeJengaPlayer(void);
+void UpdateJengaPlayer(void);
+void DrawJengaPlayer(void);
 
 void PlayerGetBuilding(BUILDING_TYPE type);
 void PlayerGetBusiness(BUSINESS_TYPE type);

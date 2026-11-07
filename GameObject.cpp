@@ -35,6 +35,11 @@ bool GameObject::IsOnMouse(void)
 	return true;
 }
 
+void GameObject::Move(void)
+{
+	m_position = { m_position.x + m_velocity.x,m_position.y + m_velocity.y };
+}
+
 void GameObject::SetRigidBody(b2WorldId worldID, float density, float friction, float rotation)
 {
 	m_rigidBody = std::make_unique<RigidBody>();

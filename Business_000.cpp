@@ -9,7 +9,7 @@
 * +-------------------------------------+
 */
 #include "Business_000.h"
-#include "player.h"
+#include "jenga_player.h"
 
 
 void Business_000::Initialize(void)
