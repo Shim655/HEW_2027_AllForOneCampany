@@ -14,15 +14,10 @@
 
 void Business_000::Initialize(void)
 {
-	m_frameCount = 0;
+	Business::Initialize();
 }
 
 void Business_000::Update(void)
 {
-	m_frameCount++;
-	if (m_frameCount > 60 * 10)
-	{
-		AddMoney(Business::GetIncome());
-		m_frameCount = 0;
-	}
+	Business::Update();
 }

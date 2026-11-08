@@ -2,7 +2,7 @@
 * +-------------------------------------+
 * File   : 事業クラス[Business.h]
 * Author : 沈揆賢
-* Date   : 2026/11/04
+* Date   : 2026/11/08
 *
 *
 * 全ての事業の親クラス
@@ -29,12 +29,24 @@ public:
 	}
 	virtual ~Business() = default;
 
-	virtual void Initialize(void) = 0;
-	virtual void Update(void) = 0;
+	virtual void Initialize(void);
+	virtual void Update(void);
+
+	void IncreaseEmployee(void)
+	{
+		m_numEmployee++;
+	}
+
+	bool CanRunBusiness(void);
+	int GetRunPercent(void) const;
 
 	int GetNumEmployeeNeeded(void) const
 	{
 		return m_numEmployeeNeeded;
+	}
+	int GetNumEmployee(void) const
+	{
+		return m_numEmployee;
 	}
 	int GetIncome(void) const
 	{
@@ -42,6 +54,8 @@ public:
 	}
 
 private:
+	int m_frameCount{ 0 };
 	int m_numEmployeeNeeded{ 0 };
+	int m_numEmployee{ 0 };
 	int m_income{ 0 };
 };

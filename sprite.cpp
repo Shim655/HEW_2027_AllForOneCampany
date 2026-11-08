@@ -266,11 +266,11 @@ void DrawSpriteCirclePercentScroll(XMFLOAT2 position, float radius, int percent,
 
 		angle = (360.0f / 100) * i * (3.14f / 180.0f);
 		vertexPosition.x = radius * cosf(angle) + position.x;
-		vertexPosition.y = radius * sinf(angle) + position.y;
+		vertexPosition.y = radius * -sinf(angle) + position.y;
 
 		v[0].Position = { position.x,  position.y, 0.0f };
-		v[1].Position = { prevVertexPosition.x,prevVertexPosition.y,0.0f };
-		v[2].Position = { vertexPosition.x, vertexPosition.y, 0.0f };
+		v[1].Position = { vertexPosition.x, vertexPosition.y, 0.0f };
+		v[2].Position = { prevVertexPosition.x,prevVertexPosition.y,0.0f };
 
 		XMFLOAT4 color;
 		if (i < percent)

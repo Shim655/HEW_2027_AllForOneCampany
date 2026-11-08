@@ -19,6 +19,7 @@
 #include "keyboard.h"
 #include "Building.h"
 #include "GameObject.h"
+#include "jenga_player.h"
 using namespace DirectX;
 
 static constexpr int MAX_BUILDINGS = 1000;
@@ -72,6 +73,8 @@ void InitializeJengaManager(void)
 	g_groundShakeTime = 0.0f;
 	g_groundShakePower = 0.0f;
 	g_groundShakeFrame = 0;
+
+	Building::SetCircleEffectTexture();
 }
 
 void FinalizeJengaManager(void)
@@ -80,6 +83,7 @@ void FinalizeJengaManager(void)
 	b2DestroyWorld(g_worldID);
 
 
+	Building::ReleaseCircleEffectTexture();
 	for (int i = 0;i < MAX_BUILDINGS;i++)
 	{
 		if (g_pBuildings[i])
@@ -159,6 +163,8 @@ void DrawJengaManager(void)
 		DrawSpriteScroll(
 			rigidBody->GetPosition(), g_pBuildings[i]->GetSize(), rigidBody->GetRotation(),
 			g_pBuildings[i]->GetTextureID(), g_pBuildings[i]->GetColor());
+
+		g_pBuildings[i]->Draw();
 	}
 }
 
@@ -250,6 +256,29 @@ void SetJengaBusiness(b2BodyId bodyID, BUSINESS_TYPE type)
 
 		building->SetBusiness(type);
 
+		break;
+	}
+}
+
+void SetJengaEmployee(b2BodyId bodyID)
+{
+	for (Building* building : g_pBuildings)
+	{
+		if (building == nullptr)
+		{
+			continue;
+		}
+		if (building->GetRigidBody()->GetBodyID().index1 != bodyID.index1)
+		{
+			continue;
+		}
+
+		if (building->GetBusiness() != nullptr)
+		{
+			building->IncreaseEmployee();
+			AddEmployee();
+		}
+		
 		break;
 	}
 }

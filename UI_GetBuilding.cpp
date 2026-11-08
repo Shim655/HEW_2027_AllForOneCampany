@@ -15,6 +15,7 @@
 #include "color.h"
 #include "text.h"
 #include "jenga_player.h"
+#include "EmergencyManager.h"
 using namespace DirectX;
 
 static constexpr int PRICE = 100;
@@ -32,6 +33,11 @@ void UI_GetBuilding::Finalize(void)
 
 void UI_GetBuilding::Update(void)
 {
+	if (GetIsEmergency())
+	{
+		return;
+	}
+
 	if (GameObject::IsOnMouse() == false)
 	{
 		GameObject::SetColor(GetColorCode(COLOR::WHITE));
@@ -57,6 +63,11 @@ void UI_GetBuilding::Update(void)
 
 void UI_GetBuilding::Draw(void) const
 {
+	if (GetIsEmergency())
+	{
+		return;
+	}
+
 	const XMFLOAT2 position = GameObject::GetPosition();
 	const std::wstring text = std::wstring{ L"$" } + std::to_wstring(PRICE);
 	DrawSpriteText(text, { position.x - 50.0f,position.y - 100.0f });

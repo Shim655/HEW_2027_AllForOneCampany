@@ -56,6 +56,7 @@ void DrawJengaManager(void);
 
 void SetJenga(const Building* building);
 void SetJengaBusiness(b2BodyId bodyID, BUSINESS_TYPE type);
+void SetJengaEmployee(b2BodyId bodyID);
 const OverLapContext& CheckJengaOverlap(DirectX::XMFLOAT2 position, DirectX::XMFLOAT2 size, float rotation);
 
 void ShakeJenga(void);

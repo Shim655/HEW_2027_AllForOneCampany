@@ -12,7 +12,6 @@
 #include "renderer.h"
 #include "keyboard.h"
 #include "mouse.h"
-
 using namespace DirectX;
 
 static constexpr float SPEED_CAMERA = 10.0f;
@@ -27,6 +26,11 @@ static XMFLOAT3 g_cameraOffset{ 0.0f,0.0f,0.0f };
 const XMFLOAT3& GetCameraOffset(void)
 {
 	return g_cameraOffset;
+}
+
+void SetCameraOffset(XMFLOAT3 cameraOffset)
+{
+	g_cameraOffset = cameraOffset;
 }
 
 void InitializeCamera(void)

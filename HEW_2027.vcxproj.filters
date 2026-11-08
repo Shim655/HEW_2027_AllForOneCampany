@@ -105,6 +105,9 @@
     <ClInclude Include="Rocket.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
+    <ClInclude Include="UI_Emergency.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -180,6 +183,12 @@
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="emergency_player.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="UI_Emergency.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Business.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>

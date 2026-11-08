@@ -20,8 +20,10 @@ void DrawJengaPlayer(void);
 
 void PlayerGetBuilding(BUILDING_TYPE type);
 void PlayerGetBusiness(BUSINESS_TYPE type);
+void SetPlayerHasEmployee(bool hasOrNot);
 
 void AddMoney(int moneyAdd);
 void AddEmployee(void);
 int GetMoney(void);
 int GetNumEmployee(void);
+bool GetPlayerHasEmployee(void);

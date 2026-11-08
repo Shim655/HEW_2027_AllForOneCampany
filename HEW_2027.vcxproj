@@ -159,6 +159,7 @@
     <ClInclude Include="texture.h" />
     <ClInclude Include="UI.h" />
     <ClInclude Include="UIManager.h" />
+    <ClInclude Include="UI_Emergency.h" />
     <ClInclude Include="UI_GetBuilding.h" />
     <ClInclude Include="UI_GetBusiness.h" />
     <ClInclude Include="UI_GetEmployee.h" />
@@ -169,6 +170,7 @@
   <ItemGroup>
     <ClCompile Include="Audio.cpp" />
     <ClCompile Include="Building.cpp" />
+    <ClCompile Include="Business.cpp" />
     <ClCompile Include="Business_000.cpp" />
     <ClCompile Include="camera.cpp" />
     <ClCompile Include="color.cpp" />
@@ -186,6 +188,7 @@
     <ClCompile Include="text.cpp" />
     <ClCompile Include="texture.cpp" />
     <ClCompile Include="UIManager.cpp" />
+    <ClCompile Include="UI_Emergency.cpp" />
     <ClCompile Include="UI_GetBuilding.cpp" />
     <ClCompile Include="UI_GetBusiness.cpp" />
     <ClCompile Include="UI_GetEmployee.cpp" />

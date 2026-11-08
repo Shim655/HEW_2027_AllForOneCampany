@@ -32,12 +32,21 @@ public:
 	}
 
 	void Update(void);
+	void Draw(void) const;
 
 	void SetBusiness(BUSINESS_TYPE type);
+	void IncreaseEmployee(void);
+
+	static void SetCircleEffectTexture(void);
+	static void ReleaseCircleEffectTexture(void);
 
 	BUILDING_TYPE GetBuildingType(void) const
 	{
 		return m_type;
+	}
+	const Business* GetBusiness(void) const
+	{
+		return m_business.get();
 	}
 
 private:

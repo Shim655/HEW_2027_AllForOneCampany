@@ -28,10 +28,23 @@ static Building* g_pBuilding{ nullptr };
 static GameObject g_businessIcon({ 0.0f,0.0f }, { 50.0f,50.0f }, 0.0f);
 static BUSINESS_TYPE g_business{ BUSINESS_TYPE::NONE };
 
+static GameObject g_employeeIcon({ 0.0f,0.0f }, { 50.0f,50.0f }, 0.0f);
+static bool g_playerHasEmployee{ false };
+
 static int g_money{ 0 };
 static int g_numEmployee{ 0 };
 
 static b2BodyId g_debugID;
+
+bool CanPlayerGetSomething(void)
+{
+	if (g_pBuilding || g_business != BUSINESS_TYPE::NONE || g_playerHasEmployee)
+	{
+		return false;
+	}
+
+	return true;
+}
 
 void InitializeJengaPlayer(void)
 {
@@ -43,6 +56,12 @@ void InitializeJengaPlayer(void)
 	g_businessIcon.SetColor(GetColorCode(COLOR::WHITE));
 	g_businessIcon.SetTextureID(LoadTexture(L"asset\\UI_Heart_Full.png"));
 	g_business = BUSINESS_TYPE::NONE;
+
+
+	g_employeeIcon.SetSize({ 50.0f,50.0f });
+	g_employeeIcon.SetColor(GetColorCode(COLOR::WHITE));
+	g_employeeIcon.SetTextureID(LoadTexture(L"asset\\Princess.png"));
+	g_playerHasEmployee = false;
 }
 
 void FinalizeJengaPlayer(void)
@@ -69,7 +88,7 @@ void UpdateJengaPlayer(void)
 	g_playerPosition.y -= cameraOffset.y;
 
 
-
+	//ÉrÉãÇÃëÄçÏ
 	if (g_pBuilding != nullptr)
 	{
 		//âÒì]
@@ -100,6 +119,8 @@ void UpdateJengaPlayer(void)
 			}
 		}
 	}
+
+	//éñã∆ÇÃëÄçÏ
 	if (g_business != BUSINESS_TYPE::NONE)
 	{
 		const OverLapContext overlap = CheckJengaOverlap(g_playerPosition, g_businessIcon.GetSize(), g_businessIcon.GetRotation());
@@ -117,6 +138,27 @@ void UpdateJengaPlayer(void)
 		else
 		{
 			g_businessIcon.SetColor(GetColorCode(COLOR::WHITE));
+		}
+	}
+
+	//é–àıÇÃëÄçÏ
+	if (g_playerHasEmployee)
+	{
+		const OverLapContext overlap = CheckJengaOverlap(g_playerPosition, g_employeeIcon.GetSize(), g_employeeIcon.GetRotation());
+		g_debugID = overlap.hitBodyID;
+
+		if (overlap.hit)
+		{
+			g_employeeIcon.SetColor(GetColorCode(COLOR::WHITE, 0.5f));
+			if (GetMouseState(MOUSE::BUTTON_LEFT_UP))
+			{
+				SetJengaEmployee(overlap.hitBodyID);
+				g_playerHasEmployee = false;
+			}
+		}
+		else
+		{
+			g_employeeIcon.SetColor(GetColorCode(COLOR::WHITE));
 		}
 	}
 }
@@ -138,11 +180,17 @@ void DrawJengaPlayer(void)
 		const std::wstring text = std::wstring{ L"bodyId : " } + std::to_wstring(g_debugID.index1);
 		DrawSpriteText(text, drawPosition);
 	}
+	if (g_playerHasEmployee)
+	{
+		const XMINT2 mousePosition = GetMousePosition();
+		const XMFLOAT2 drawPosition{ (float)mousePosition.x,(float)mousePosition.y };
+		DrawSpriteZoom(drawPosition, g_employeeIcon.GetSize(), g_employeeIcon.GetRotation(), g_employeeIcon.GetTextureID(), g_employeeIcon.GetColor());
+	}
 }
 
 void PlayerGetBuilding(BUILDING_TYPE type)
 {
-	if (g_pBuilding)
+	if (CanPlayerGetSomething() == false)
 	{
 		return;
 	}
@@ -187,5 +235,30 @@ int GetNumEmployee(void)
 
 void PlayerGetBusiness(BUSINESS_TYPE type)
 {
+	if (CanPlayerGetSomething() == false)
+	{
+		return;
+	}
+
 	g_business = type;
+}
+
+void SetPlayerHasEmployee(bool hasOrNot)
+{
+	if (hasOrNot)
+	{
+		if (CanPlayerGetSomething())
+		{
+			g_playerHasEmployee = hasOrNot;
+		}
+	}
+	else
+	{
+		g_playerHasEmployee = hasOrNot;
+	}
+}
+
+bool GetPlayerHasEmployee(void)
+{
+	return g_playerHasEmployee;
 }

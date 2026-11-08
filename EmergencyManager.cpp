@@ -8,11 +8,14 @@
 * 緊急事業を管理
 * +-------------------------------------+
 */
+#include "EmergencyManager.h"
 #include "main.h"
 #include "sprite.h"
 #include "texture.h"
 #include "camera.h"
 #include "keyboard.h"
+#include "text.h"
+#include "color.h"
 #include "Inseki.h"
 #include "Rocket.h"
 #include "JengaManager.h"
@@ -41,12 +44,17 @@ static int g_rocketTexture{ -1 };
 
 static EMERGENCY_STATE g_state{ EMERGENCY_STATE::NONE };
 static bool g_isEmergency{ false };
+static int g_frameCount{ 0 };
+static int g_timeSec{ 0 };
 
 bool GetIsEmergency(void)
 {
 	return g_isEmergency;
 }
-
+int GetEmergencyTimeSec(void)
+{
+	return g_timeSec;
+}
 void SetEmergencyTrue(void)
 {
 	g_isEmergency = true;
@@ -56,6 +64,8 @@ void InitializeEmergencyManager(void)
 {
 	g_state = EMERGENCY_STATE::NONE;
 	g_isEmergency = false;
+	g_frameCount = 0;
+	g_timeSec = 0;
 
 	g_insekiTexture = LoadTexture(L"asset\\Inseki.png");
 	g_rocketTexture = LoadTexture(L"asset\\rocket.png");
@@ -95,7 +105,14 @@ void UpdateEmergencyManager(void)
 #ifdef _DEBUG
 	if (Keyboard_IsKeyTrigger(KK_E))
 	{
-		g_state = EMERGENCY_STATE::ACTION;
+		if (g_isEmergency)
+		{
+			g_state = EMERGENCY_STATE::END;
+		}
+		else
+		{
+			SetEmergencyTrue();
+		}
 	}
 #endif // DEBUG
 
@@ -103,9 +120,24 @@ void UpdateEmergencyManager(void)
 	switch (g_state)
 	{
 	case EMERGENCY_STATE::NONE:
+		if (g_isEmergency)
+		{
+			g_state = EMERGENCY_STATE::READY;
+			g_frameCount = 0;
+
+			//カメラ
+			SetCameraOffset({ 0.0f,700.0f,0.3f });
+		}
 		break;
 
 	case EMERGENCY_STATE::READY:
+		g_frameCount++;
+		if (g_frameCount > 60 * 3)
+		{
+			g_state = EMERGENCY_STATE::ACTION;
+			g_frameCount = 0;
+			g_timeSec = 0;
+		}
 		break;
 
 	case EMERGENCY_STATE::ACTION:
@@ -177,9 +209,41 @@ void UpdateEmergencyManager(void)
 			inseki->Move();
 		}
 
+		//タイマー
+		g_frameCount++;
+		if (g_frameCount > EMERGENCY_LAST_FRAME)
+		{
+			g_state = EMERGENCY_STATE::END;
+			g_frameCount = 0;
+		}
+		g_timeSec = g_frameCount / 60;
+
 		break;
 
 	case EMERGENCY_STATE::END:
+		g_state = EMERGENCY_STATE::NONE;
+		g_isEmergency = false;
+		g_timeSec = 0;
+
+		for (Inseki*& inseki : g_insekis)
+		{
+			if (inseki)
+			{
+				delete inseki;
+				inseki = nullptr;
+			}
+		}
+		for (Rocket*& rocket : g_rockets)
+		{
+			if (rocket)
+			{
+				delete rocket;
+				rocket = nullptr;
+			}
+		}
+
+		//カメラ
+		SetCameraOffset({ 0.0f,0.0f,1.0f });
 		break;
 
 	default:
@@ -195,8 +259,12 @@ void DrawEmergencyManager(void)
 		break;
 
 	case EMERGENCY_STATE::READY:
-		break;
+	{
+		const std::wstring text = L"！緊急事業発生！";
+		DrawSpriteText(text, { 365.0f,100.0f }, 2.0f, GetColorCode(COLOR::RED));
 
+		break;
+	}
 	case EMERGENCY_STATE::ACTION:
 		DrawEmergencyPlayer();
 

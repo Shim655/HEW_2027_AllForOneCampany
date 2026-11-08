@@ -15,6 +15,7 @@
 #include "color.h"
 #include "text.h"
 #include "jenga_player.h"
+#include "EmergencyManager.h"
 using namespace DirectX;
 
 static constexpr int NUM_EMPLOYEE_NEEDED = 1;
@@ -32,6 +33,11 @@ void UI_GetBusiness::Finalize(void)
 
 void UI_GetBusiness::Update(void)
 {
+	if (GetIsEmergency())
+	{
+		return;
+	}
+
 	if (GameObject::IsOnMouse() == false)
 	{
 		GameObject::SetColor(GetColorCode(COLOR::WHITE));
@@ -47,15 +53,17 @@ void UI_GetBusiness::Update(void)
 		//ボタンを押したときの処理
 		GameObject::SetColor(GetColorCode(COLOR::WHITE));
 
-		if (GetNumEmployee() >= NUM_EMPLOYEE_NEEDED)
-		{
-			PlayerGetBusiness(BUSINESS_TYPE::_000);
-		}
+		PlayerGetBusiness(BUSINESS_TYPE::_000);
 	}
 }
 
 void UI_GetBusiness::Draw(void) const
 {
+	if (GetIsEmergency())
+	{
+		return;
+	}
+
 	const XMFLOAT2 position = GameObject::GetPosition();
 	const std::wstring text0 = std::wstring{ L"必要社員数：" } + std::to_wstring(NUM_EMPLOYEE_NEEDED);
 	const std::wstring text1 = std::wstring{ L"収益：" } + std::to_wstring(100);

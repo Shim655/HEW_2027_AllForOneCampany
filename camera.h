@@ -16,3 +16,4 @@ void InitializeCamera(void);
 void UpdateCamera(void);
 
 const DirectX::XMFLOAT3& GetCameraOffset(void);
+void SetCameraOffset(DirectX::XMFLOAT3 cameraOffset);

@@ -17,6 +17,7 @@
 #include "UI_GetEmployee.h"
 #include "UI_GetBusiness.h"
 #include "UI_Score.h"
+#include "UI_Emergency.h"
 using namespace DirectX;
 
 
@@ -29,6 +30,7 @@ static UI* g_UIs[]
 	new UI_GetBusiness{ XMFLOAT2(100.0f, 350.0f), XMFLOAT2(100.0f, 100.0f), 0.0f },
 	new UI_GetBuilding{ XMFLOAT2(100.0f, 550.0f), XMFLOAT2(100.0f, 100.0f), 0.0f },
 	new UI_Score{ XMFLOAT2(1050.0f, 30.0f), XMFLOAT2(100.0f, 100.0f), 0.0f },
+	new UI_Emergency{ XMFLOAT2(60.0f, 600.0f), XMFLOAT2(100.0f, 100.0f), 0.0f },
 };
 
 void InitializeUIManager(void)
